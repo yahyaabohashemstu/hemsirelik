@@ -349,6 +349,36 @@
   }
   .test-tab:not(.active) .test-tab-badge{background:var(--glass-strong)}
 
+  /* distinctive bordered tab for the Original test */
+  .test-tab.tab-original{
+    border:1.5px solid transparent;
+    background:
+      linear-gradient(rgba(10,15,30,0.6),rgba(10,15,30,0.6)) padding-box,
+      linear-gradient(135deg,#fbbf24,#f97316 50%,#ef4444) border-box;
+    color:#fcd34d;
+    box-shadow:0 0 0 1px rgba(251,191,36,0.25),0 6px 18px -6px rgba(251,146,60,0.45);
+    position:relative;
+  }
+  .test-tab.tab-original::before{
+    content:"";position:absolute;inset:-1.5px;border-radius:inherit;
+    background:linear-gradient(135deg,#fbbf24,#f97316 50%,#ef4444);
+    filter:blur(8px);opacity:.35;z-index:-1;
+  }
+  .test-tab.tab-original:hover:not(.active){color:#fde68a;background:
+    linear-gradient(rgba(255,255,255,0.04),rgba(255,255,255,0.04)) padding-box,
+    linear-gradient(135deg,#fbbf24,#f97316 50%,#ef4444) border-box;}
+  .test-tab.tab-original.active{
+    background:linear-gradient(135deg,#fbbf24 0%,#f97316 55%,#ef4444 100%);
+    color:#1a0f00;
+    border-color:transparent;
+    box-shadow:0 8px 26px -6px rgba(249,115,22,0.7),0 0 0 1px rgba(251,191,36,0.6);
+    text-shadow:0 1px 0 rgba(255,255,255,0.15);
+  }
+  .test-tab.tab-original .test-tab-badge{background:rgba(255,255,255,0.2);color:inherit}
+  .test-tab.tab-original.active .test-tab-badge{background:rgba(26,15,0,0.25);color:#1a0f00}
+  .test-tab.tab-original .orig-icon{color:#fbbf24}
+  .test-tab.tab-original.active .orig-icon{color:#1a0f00}
+
   @keyframes fadeUp{
     from{opacity:0;transform:translateY(16px)}
     to{opacity:1;transform:translateY(0)}
@@ -389,7 +419,7 @@
         <strong id="stat-wrong">0</strong> Yanlış
       </div>
       <div class="stat-chip">
-        <strong id="stat-progress">0</strong>/30
+        <strong id="stat-progress">0</strong>/<span id="stat-total">63</span>
       </div>
     </div>
   </div>
@@ -398,7 +428,7 @@
 
 <main>
   <section class="hero">
-    <span class="eyebrow" id="eyebrow">Test 1</span>
+    <span class="eyebrow" id="eyebrow">Orijinal Test</span>
     <h1>Çocuk Sağlığı ve Hastalıkları Hemşireliği</h1>
     <p>Çoktan seçmeli interaktif sınav simülasyonu. Her sorunun yanındaki <strong>Kontrol Et</strong> butonuna basarak cevabınızı anında doğrulayabilirsiniz.</p>
     <div class="meta">
@@ -416,11 +446,15 @@
       </span>
     </div>
     <div class="test-tabs" role="tablist" id="test-tabs">
-      <button class="test-tab active" role="tab" data-test="0">Test 1<span class="test-tab-badge">30</span></button>
-      <button class="test-tab" role="tab" data-test="1">Test 2<span class="test-tab-badge">30</span></button>
-      <button class="test-tab" role="tab" data-test="2">Test 3<span class="test-tab-badge">30</span></button>
-      <button class="test-tab" role="tab" data-test="3">Test 4<span class="test-tab-badge">30</span></button>
-      <button class="test-tab" role="tab" data-test="4">Test 5<span class="test-tab-badge">30</span></button>
+      <button class="test-tab tab-original active" role="tab" data-test="0">
+        <svg class="orig-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+        Orijinal Test<span class="test-tab-badge" id="badge-0">63</span>
+      </button>
+      <button class="test-tab" role="tab" data-test="1">Test 1<span class="test-tab-badge">30</span></button>
+      <button class="test-tab" role="tab" data-test="2">Test 2<span class="test-tab-badge">30</span></button>
+      <button class="test-tab" role="tab" data-test="3">Test 3<span class="test-tab-badge">30</span></button>
+      <button class="test-tab" role="tab" data-test="4">Test 4<span class="test-tab-badge">30</span></button>
+      <button class="test-tab" role="tab" data-test="5">Test 5<span class="test-tab-badge">30</span></button>
     </div>
   </section>
 
@@ -468,6 +502,135 @@
 </footer>
 
 <script>
+const TEST_ORIGINAL = [
+  {q:"Aşağıdaki seçeneklerden hangisinde pediatri ekibinin amacı anlamına en uygun şekilde ifade edilmiştir?",
+   options:["Hastalıkların önlenmesi, her çocuğun sağlığının maksimum düzeyde tutulması, büyüme ve gelişimlerinin takip edilmesi","Bireyin doğumdan itibaren adolesan dönemi süresince büyüme ve gelişmesinin takip edilmesi","Çocuğun sağlığının maksimum seviyede tutulması, hastalıkların önlenmesi","Hastalıkların önlenmesi, büyüme ve gelişimin takip edilmesi","Çocukların iyi bir yaşam sürdürebilmelerini sağlamak"], correct:0},
+  {q:"Novasef 7 yaşındaki çocuk için önerilen güvenli doz sınırları 3–5 mg/kg/24 saattir. Bu ilaç doktor isteminde Luminal IX 75 mg IM önerilmektedir. Novasef 250 mg / 2 ml sıvı preparattır. Doktor istemindeki ilaç dozunun güvenli sınırlar içinde olup olmadığını ve bir defada vereceğiniz dozunuzu hesaplayınız. Güvenli midir? (Çocuğun kilosu 30 kg'dır.)",
+   options:["0.4 cc – güvenli","0.6 cc – güvenli","0.8 cc – güvenli","0.6 cc – güvensiz","0.8 cc – güvensiz"], correct:3},
+  {q:"Pediatride ilaç dozunun hesaplanması özel bir dikkati gerektirir. Bunun nedenleri aşağıdakilerden hangileridir? I- Yenidoğan ve prematürelerde vücut sistemlerinin immatürlüğü ilaç uygulamalarını daha riskli hale getirir. II- Bebek ve çocukların yaşlarına göre vücut ağırlıkları ve vücut yüzeyleri farklıdır. III- Bebek ve çocuklarda ilaçların tedavi edici ve toksik doz sınırı birbirine yakındır. IV- İlaç dozunun çok küçük miktarlarda olması nedeniyle kayıplar önem taşır. V- Küçük çocuklarda ilaç verme daha uzun süre gerektirir.",
+   options:["1-2-3-4","1-2-3-5","2-3-4-5","1-3-4-5","4-5"], correct:0},
+  {q:"Bebeğe intramüsküler enjeksiyon uygulanmasında aşağıdaki ifadelerden hangisi yanlıştır?",
+   options:["Bebeklerde vastus lateralis kasları intramüsküler enjeksiyon için tercih edilmelidir.","Bebeklerde vastus lateralis kaslarına enjeksiyon genellikle 60 derece açıyla yapılmalıdır.","Dorsogluteal bölge 3 yaşından önce enjeksiyon için tercih edilmez.","İlacın verilmesi bebeklerde ve küçük çocuklarda 0.5–1 ml fazla olmamalıdır.","Ventrogluteal bölge 3 yaş sonrası çocuklarda tercih edilmelidir."], correct:1},
+  {q:"Başın çevrildiği taraftaki kol ve bacakların ekstansiyonu, karşı taraftaki kol ve bacakların fleksiyonu, pervisyonun görülmesi, ellerin yumruk şeklinde olabildiği, 3–4 ayda kaybolan refleks hangisidir?",
+   options:["Tonik boyun","Eklem tonusu","Moro refleksi","Adım atma","Yakalama refleksi"], correct:0},
+  {q:"Ön fontanelin çökük olması aşağıdakilerden hangi bulguya işaret eder?",
+   options:["Kafa içi basıncın artışı","Kraniotebes","Mikrosefali","Hidrosefali","Dehidratasyon"], correct:4},
+  {q:"Aşağıdakilerden hangisi aile merkezli bakımı geliştirme stratejileri arasında olmayan seçeneği ifade etmektedir?",
+   options:["Aile destek grupları oluşturmak","Aileler için otopark indirimi sağlamak","Destek kaynakları konusunda aileyi bilgilendirmek","Sağlık bakım ekibi arasında koordinasyonu sağlamak","Ailenin tüm gereksinimlerinin sağlık profesyonelleri tarafından karşılanması"], correct:4},
+  {q:"Tedavi edilmezse bebekte kas zayıflığı, işitme kaybı, görme problemleri, saç dökülmesi, deri döküntüleri, havale, gelişme geriliği gibi problemler gelişebildiği için yapılan yenidoğan tarama programı hangi faktörün eksikliğinin belirlenmesini amaçlamaktadır?",
+   options:["Tiroit","Biotinidaz","Parathormon","Fenilalanin","Growth hormon"], correct:1},
+  {q:"Aşağıdakilerden hangisi çocuğun hastaneye yatmaya ilişkin tepkilerini etkileyen faktörlerden biri değildir?",
+   options:["Hastalığın süresi ve tipi","Ağrı ve hareket kısıtlılığının tipi","Hastalık ya da hastaneye yatma ile ilgili önceki deneyimler","Cinsiyet ve psikososyal gelişim","Ebeveynlerle olan ilişkiler"], correct:3},
+  {q:"Ölümden terk edilme, ortadan kaybolma, ayrılma ile eş anlamlı olduğu, ayrılık anksiyetesinin yoğun yaşandığı dönem aşağıdakilerden hangisinde doğru olarak belirlenmiştir?",
+   options:["0–3 yaş dönemi (süt çocukluğu dönemi)","3–6 yaş dönemi (oyun dönemi)","1–3 yaş dönemi (çocuk dönemi)","6–12 yaş dönemi (okul dönemi)","12–18 yaş dönemi (adolesan dönemi)"], correct:0},
+  {q:"Hangisi büyüme ve gelişme için yanlış verilmiştir?",
+   options:["Büyüme ve gelişme, dilin gelişip konuşma becerisinin sonuna kadar devam eden dinamik bir süreçtir.","En hızlı büyüme fetal dönem ve ilk 1 yaş döneminde gerçekleşir.","Büyüme ve gelişme baştan ayağa ve içten dışa, merkezden dışa doğru gerçekleşir.","Gelişimin ilerlemesi için yenidoğan reflekslerinin kaybolması gerekir.","Motor gelişim kaba motor becerilerden ince motor becerilere doğru ilerler."], correct:0},
+  {q:"Aşağıdakilerden hangisi bağışıklamada hemşirenin sorumluluklarından biri değildir?",
+   options:["Aşılamanın yararını bilmek ve toplumdaki her bireye öğretmek","Aşının etkinliğini sürdürmek","Aşı sonrası gelişebilecek reaksiyonları ve alınacak önlemleri bilmek","Aşı uygulamalarının kontrendike olduğu durumları belirlemek","Aşı üretiminden bireye uygulanmasına kadar sıcak zinciri korumak"], correct:4},
+  {q:"Larnictal 4 x 100 mg (PO) istem edilmiştir. Firma önerisi ise 6–8 mg/kg/gün ilaç verilmesi şeklindedir. İlaç verilmesi istenen çocuğun kilosu 25 kg'dır. Bu durumda istenilen dozun güvenli doz aralığı aşağıdakilerden hangisidir?",
+   options:["150–200 mg","400–800 mg","24–32 mg","600–800 mg","150–400 mg"], correct:0},
+  {q:"Sefazol 4 x 130 mg IV (Sefazol flk 500 mg flk., ilacın toz ağırlığı 0.5 cc'dir). 4.5 cc ile sulandıralım. Her doz için kaç cc verilir?",
+   options:["1.3 cc = 13 dizyem","4 cc = 40 dizyem","5 cc = 50 dizyem","0.65 cc = 6.5 dizyem","0.85 cc = 8.5 dizyem"], correct:0},
+  {q:"Kaptopril 2 x 6.5 mg (PO) (1 tb = 25 mg'dır). 1.5 yaşındaki çocuğa bu ilaç 5 cc ile sulandırılıp verildiğinde her doz için kaç cc verilir?",
+   options:["1.62 cc = 16.2 dizyem","1.3 cc = 13 dizyem","1.5 cc = 15 dizyem","1.7 cc = 17 dizyem","1.4 cc = 14 dizyem"], correct:1},
+  {q:"Hastaya 4 x 15 mg Ranitidin istenmiştir, hastaya uygulanacak ilaç ile ilgili bilgi doğru mudur? (İlaç piyasa formu 50 mg / 2 ml)",
+   options:["6 dizyem","12 dizyem","0.3 cc","0.5 cc","1.2 cc"], correct:0},
+  {q:"Çocukluk çağında tip 1 diyabet tanı kriterleri hangisinde doğru verilmiştir?",
+   options:["Açlık kan şekerinin bir defa 126 mg/dl üzerinde olması","OGTT yapılan hastada 2. saat kan şekerinin 140 mg/dl olması","OGTT yapılan hastada 2. saat kan şekeri 140–199 mg/dl arasında olması","Tokluk kan şekerinin 2 defa en fazla 126 mg/dl üzerinde olması","Açlık veya tokluk kan şekerinin 200 mg/dl üzerinde olması"], correct:4},
+  {q:"HbA1c ile ilgili hangisi yanlıştır?",
+   options:["Glikozillenmiş hemoglobindir","İnsülin düzeyi hakkında bilgi verir","Kan glukoz düzeyi tayininde kullanılır","Çocuğun geriye yönelik 3 aylık bir ölçümüdür","Diyabetin rutin takibinde yer alır"], correct:1},
+  {q:"Hipotiroidli bir çocuğun bakımı aileye anlatılırken üzerinde en fazla durulması gereken konu hangisidir?",
+   options:["Hormon kullanımının ömür boyu devam edeceği","Hormonla birlikte D vitamini verilmesi gerektiği","Boy uzamanın gecikebileceği","Diş çıkmasının gecikebileceği","Beslenme düzeninin sağlanması gerektiği"], correct:0},
+  {q:"Hangisi Freud'a göre simbiyotik ilişkiyi açıklamaktadır?",
+   options:["Bebeğin ilk altı aylık dönemde diğer kişilere ve objelere ilişkin bir düşüncesinin olmamasıdır.","Bebeğin kendisine bakan annesini ayrı bir birey olarak değil, kendi bedeninin bir uzantısı olarak görmesidir.","Bebeğin yaklaşık altıncı ayın başlarında annenin ayrı bir birey olduğunu kavramaya başlamasıdır.","Çocuğun bireyselleşme ve otonomi kazanma çabaları içine girmesidir.","Hepsi"], correct:1},
+  {q:"I. Bu dönemde cinsel enerji genital bölgeye odaklanır. II. Çocuklar kendi cinsel organlarına dokunur ve haz almayı keşfeder. III. Mastürbasyon davranışı yaygındır. Yukarıda verilen özellikler Freud'a göre hangi yaş döneminin temel özelliklerindendir?",
+   options:["Oral dönem","Anal dönem","Fallik dönem","Latent (Gizli) dönem","Genital dönem"], correct:2},
+  {q:"Erikson'un psikososyal evreleri aşağıda verilmiştir. Hangisi yanlıştır?",
+   options:["Temel güvene karşı güvensizlik (0–1 yaş)","Karşı kuşku ve utanç (1–3 yaş)","Girişimciliğe karşı suçluluk (3–7 yaş)","Çalışkanlığa karşı aşağılık duygusu (7–11 yaş)","Üretkenliğe karşı durgunluk dönemi (11–18 yaş)"], correct:4},
+  {q:"Malnütrisyonun nedenlerine yönelik aşağıda verilenlerden hangisi yanlıştır?",
+   options:["Enerji ve besin öğeleri yetersizliği ve enfeksiyonların yaygın olması","Beslenme ile ilgili çeşitli alışkanlıkların ekonomik ve kültürel etkilenmesi","Sindirimi, anatomi ve metabolizmayı etkileyen çeşitli hastalıklar (çölyak gibi)","Besinlere olan enerji yöneliminin olmaması","Besinlere olan alerjinin olmaması"], correct:4},
+  {q:"Aşağıdakilerden hangisi primer hemşirelik için söylenemez?",
+   options:["Hasta-hemşire ilişkisinde güven sağlar","Primer sağlık bakımı kavramına da eşlik eder","Bir tane hastanın total hemşirelik bakımını üstlenir","Hasta-hemşire ilişkisinde güven sağlar","Holistik bakımı sağlar"], correct:1},
+  {q:"I- Sağlık çalışanları ve aile arasındaki iletişimi artırır ve geliştirir. II- Ailenin sürece dahil edilmesiyle ailenin durumu uyum sürecini kolaylaştırır. Yukarıda olumlu yanları anlatılan bakım çeşidi aşağıdakilerden hangisidir?",
+   options:["Aile merkezli bakım","Atravmatik bakım","Primer hemşirelik","Vaka yönetimi","Çocuk merkezli bakım"], correct:0},
+  {q:"Tip 1 diyabetin belirtileri ve nedenlerine yönelik yanlış bilgiyi işaretleyiniz.",
+   options:["Polidipsi: Dehidratasyon ve aşırı susama nedeniyle ile çok sıvı alımı vardır","Polifaji: Büyüme hormonunun fazla salgılanmasına bağlı olarak gelişir","Poliüri: İdrar miktarı artar","Kilo kaybı: Dehidratasyon ve yağ depolarının yıkımı sonucu gelişir","Halsizlik: Enerji depolarının azalmasına bağlıdır"], correct:1},
+  {q:"Aşağıdakilerden hangisi ödem oluşumunda rol oynayan mekanizmalardan değildir?",
+   options:["Kapiller hidrostatik basıncında artma","Plazma onkotik basıncında azalma","Kapiller permeabilitede artış","Lenfatik obstrüksiyon","Dehidratasyon"], correct:4},
+  {q:"Aşağıdaki ifadelerden hangisi çocuklarda hipernatremide öncelikle ele alınması gereken hemşirelik girişimlerinden biridir?",
+   options:["ACT ve kilo izleme","Cilt bütünlüğünü korumaya yönelik uygulamalar","Aile içi süreçlerde bozulmayı önleme","Aktivite intoleransını önlemeye yönelik girişimler","Sosyal etkileşimi sağlama"], correct:0},
+  {q:"Aşağıdakilerden hangisi yarık dudak–yarık damak için doğru değildir?",
+   options:["Yarık dudak–yarık damak birlikte de görülebilir, tek başına da görülebilir","Tek ya da çift taraflı olabilirler","Yarık dudak, yarık damak anomalilerinde beslenme ile ilgili sorunlar görülebilir","Ameliyattan 2 saat sonra emzirmeye başlanabilir","Yarık damağı olan çocuklarda konuşma bozuklukları görülebilir"], correct:3},
+  {q:"Çocuklarda nefrotik sendrom hastalığında uygulanacak hemşirelik bakımı için verilen ifadelerden hangisi yanlıştır?",
+   options:["Muz ve portakal gibi potasyumlu yiyecekler verilir","Yağdan zengin diyet verilir","AÇT takibi yapılır","Sıvı alımı kısıtlanır","Kan basıncı takip edilir"], correct:1},
+  {q:"Üriner sistem enfeksiyonu geçiren bir yenidoğanda aşağıdaki bulgulardan hangilerine rastlanır? I. Diyare; II. Kusma; III. İdrarın kötü kokması; IV. Sarılık",
+   options:["I, II, IV","III, IV","I, III, II","I, II, III, IV","II, IV"], correct:3},
+  {q:"Aşağıda verilen kanser türlerini doğru açıklamaları ile eşleştiriniz. I. Lösemi; II. Hodgkin hastalığı; III. Wilms tümörü; IV. Rabdomiyosarkom. a. Kas dokularında oluşan ve çocukluk çağında en sık görülen yumuşak doku tümörleridir; b. Genitoüriner sistemin en yaygın malign hastalığıdır; c. Kök hücrelerin sağlıklı bir şekilde olgunlaşmayıp kan hücrelerini oluşturmamasıdır; d. Lenfoid sistemi ve primer olarak lenf nodlarını içeren malign hastalıktır.",
+   options:["I-c, II-a, III-b, IV-d","I-c, II-d, III-b, IV-a","I-d, II-a, III-b, IV-c","I-b, II-a, III-d, IV-c","I-c, II-d, III-a, IV-b"], correct:1},
+  {q:"Dünya Sağlık Örgütü'nün oral mukoza tanılama rehberine göre aşağıda verilen derecelendirmelerden hangisi yanlıştır?",
+   options:["Grade 0: Mukozada değişiklik yok","Grade 1: Ağrısız ülserler, eritem veya hafif duyarlılık","Grade 2: Ağrılı eritem ve/veya ödem vardır","Grade 3: Ağrılı eritem, ödem veya ülser olmasına rağmen katı besinler tüketilebilir","Grade 4: Ülserasyonlar, nekroz ve hemoraji var, hasta beslenemez, enteral veya parenteral destek gerekir"], correct:3},
+  {q:"Kanserli çocuğun semptom yönetimine yönelik aşağıda verilen girişimlerin hangilerini uygularsınız? I. Nötropenik çocukta enfeksiyon belirti bulguları izlenmelidir. II. Anemiye bağlı yorgunluk yönetiminde, çocuk sık ve az beslenmeli, proteinden zengin ve bol kalorili besinler seçilmelidir. III. Trombosit değerleri 20000/mm³ üzerinde ise diş fırçası kullanılabilir. IV. Bulantı kusma yönetiminde, çok sevdiği yiyecekler bulantısı olduğu dönemde verilmelidir.",
+   options:["I, II, IV","I, II","I, II, III","I, II, III, IV","I, IV"], correct:2},
+  {q:"Aşağıda verilen kemoterapi tedavisinin komplikasyonları ile oluşum nedenlerini eşleştiriniz. I. Enfeksiyon; II. Kanama; III. Anemi. a. Trombositopeni; b. Eritrositopeni; c. Nötropeni.",
+   options:["I-a, II-b, III-c","I-c, II-b, III-a","I-b, II-c, III-a","I-b, II-a, III-c","I-c, II-a, III-b"], correct:4},
+  {q:"\"Tümör hücrelerinin spontan olarak ya da tedavi sonucu lizis olması ile ortaya çıkan metabolik bir bozukluktur. Tedavi sırasında hızlı hücre yıkımı sonucu fazla miktarda hücre içi materyal dolaşıma salınır.\" Yukarıda açıklaması verilen durum aşağıdakilerden hangisidir?",
+   options:["Süper vena kava sendromu","Hipersensitivite (aşırı duyarlılık)","Tümör lizis sendromu","Ekstravazasyon","Remisyon"], correct:2},
+  {q:"Grand-mal nöbetin aşamaları ve bu aşamalara özgü bulgular verilmiştir. Eşleştirdiğinizde doğru seçeneği işaretleyiniz. 1- Parlak ışıklar görme, hoş olmayan kokular hissetme, halüsinasyonlar; 2- Ağır bir uyku dönemi; 3- Tüm kaslar kasılır ve gevşer; 4- Uyku sersemliği, baş dönmesi, gerginlik. ( ) Prodromal dönem; ( ) Aura dönemi; ( ) Postiktal dönem; ( ) Tonik-klonik.",
+   options:["1,2,3,4","1,2,4,3","4,3,1,2","2,3,4,1","4,1,2,3"], correct:4},
+  {q:"Çocukluk çağı diabetinde erken metabolik komplikasyonlar hangi seçenekte gösterilmiştir?",
+   options:["Hipoglisemi-Lipodistrofi","Ketoasidoz-Retinopati","Hipoglisemi-Ketoasidoz","Retinopati-Arterioskleroz","Nefropati-Retinopati"], correct:2},
+  {q:"Protein enerji malnütrisyonu (PEM) ile ilgili ifadelerden hangisi yanlıştır?",
+   options:["PEM, en fazla okul çocuklarında ortaya çıkar","PEM, proteinden fakir beslenme sonucu ortaya çıkabilir","PEM, enerjiden fakir beslenme sonucu ortaya çıkabilir","PEM, hem protein hem de enerjiden fakir beslenme sonucu ortaya çıkabilir","PEM'de sıklıkla enfeksiyonlar eşlik eder"], correct:0},
+  {q:"Zeka geriliği ve kabızlığı olan, fontaneli geniş bir noktada dilinin de büyük olduğu fark ediliyor bu çocukta ne düşünülmelidir?",
+   options:["Hiperparatiroidi","Konjenital hipotiroidi","Hiperkalsemi","Diabetes insipidus","Emilim kusuru"], correct:1},
+  {q:"Üriner sistem enfeksiyonu geçiren bir yenidoğanda aşağıdakilerden hangilerine rastlanır? I. Diyare; II. Kusma; III. İdrarın kötü kokması; IV. Sarılık",
+   options:["I, II, IV","I, IV","II, III","I, II, III, IV","III, IV"], correct:3},
+  {q:"Çocukluk çağında tip 1 diyabet tanı kriterleri hangisinde doğru verilmiştir?",
+   options:["Açlık kan şekerinin bir defa 126 mg/dl üzerinde olması","OGTT yapılan hastada 2. saat kan şekerinin 140 mg/dl olması","OGTT yapılan hastada 2. saat kan şekerinin 140-199 mg/dl arasında olması","Tokluk kan şekerinin 2 defa üst üste 126 mg/dl üzerinde olması","Açlık veya tokluk kan şekerinin 200 mg/dl üzerinde olması"], correct:4},
+  {q:"HbA1c ile ilgili hangisi yanlıştır?",
+   options:["Glikozillenmiş hemoglobindir","İnsülin düzeyi hakkında bilgi verir","Kan glukoz düzeyi tayininde kullanılır","Çocuğun geriye yönelik 3 aylık bir ölçümdür","Diyabetin rutin takibinde yer alır"], correct:1},
+  {q:"Hipotiroidili bir çocuğun bakımı aileye anlatılırken üzerinde en fazla durulması gereken konu hangisidir?",
+   options:["Hormon kullanımının ömür boyu devam edeceği","Hormonla birlikte D vitamini verilmesi gerektiği","Boy uzamasının gecikebileceği","Diş çıkmasının gecikebileceği","Beslenme düzeninin sağlanması gerektiği"], correct:0},
+  {q:"Hastaya 4×15 mg Ranitidin istenmiştir, hastaya uygulanacak ilaç ile ilgili hangisi doğrudur? (İlacın piyasa formu 50 mg/2 ml)",
+   options:["6 dz.","12 dz.","0.3 cc","0.8 cc","1.2 cc"], correct:0},
+  {q:"Aşağıdakilerden hangisi basit (tipik) febril konvülziyonun özelliklerinden değildir?",
+   options:["Nörobilişsel hasara neden olmaz","Jeneralize nöbetler şeklindedir","Nöbet süresi 15 dakikadan kısadır","Yirmi dört saat içerisinde birden fazla konvülziyon görülür","Ateş çok yüksek olmadan nöbet oluşmaz"], correct:3},
+  {q:"Kardiyopulmoner uyum ile ilgili hangisi yanlıştır?",
+   options:["Kan oksijen konsantrasyonu artınca ductus kapanma gerçekleşir","Endojen prostaglandinlerde düşüş ve asidoz ductal kapanma ile olur","Foramen ovale sağ kalp basıncının artması ile kapanır","Akciğer kanlanmasının artar, sağ atrium, sağ ventrikül ve pulmoner arter basınçları azalır","Umbilikal kordon klemplenmesi ile kan volümünde artma olur"], correct:2},
+  {q:"Atravmatik bakım hakkında hangisi yanlıştır?",
+   options:["Ameliyatı planlanan çocuğun ameliyat öncesi hastaneyi ziyaret etmesini sağlamak","Ağrı varlığında sürekli analjezik uygulaması ile ağrı kontrolü sağlanması","Terapötik oyun aktivitelerinin kullanılması","Kullanılacak malzemelerin korku oluşturacağından tanıtılmaması","Kan alma ve enjeksiyon öncesi lokal anestezik krem uygulanmasının sağlanması"], correct:3},
+  {q:"Akut böbrek yetmezliği nedeni ile çocuk kliniğinde yatan bir çocuğun hemşirelik bakımı ile ilgili yapılan girişimlerden hangileri doğrudur? I. AÇT ve kilo takibi yapılır. II. Aşırı sıvı yüklenmesi ya da dehidratasyon gibi durumlar izlenir. III. Hastanın hareket etmesi kısıtlanır. IV. Hastanın monitor ile takip edilmesine gerek yoktur. V. Hasta üriner enfeksiyon yönünden izlenir ve idrar durumu takip edilir.",
+   options:["I, II, III","I, II, IV","I, III, IV","II, IV, V","I, II, V"], correct:4},
+  {q:"Aşağıdakilerden hangisi pulmoner kan akımını azaltan hastalıkların klinik bulguları arasında yer almaz?",
+   options:["Siyanoz","Polisitemi","Büyüme geriliği","Pulmoner hipertansiyon","Beslenme güçlüğü"], correct:3},
+  {q:"Dünya Sağlık Örgütü'nün oral mukoza tanılama rehberine göre aşağıda verilen derecelendirmelerden hangisi yanlıştır?",
+   options:["Grade 0: Mukozada değişiklik yok","Grade 1: Ağrısız ülserler, eritem veya hafif duyarlılık","Grade 2: Ağrılı eritem ve/veya ödem vardır","Grade 3: Ağrılı eritem, ödem veya ülser olmasına rağmen katı besinler tüketilebilir","Grade 4: Ülserasyonlar, nekroz ve hemoraji var, beslenemez, enteral veya parenteral destek gerekir"], correct:3},
+  {q:"Anormal nöronlardan elektriksel boşalımlar sonucu spontan tekrarlayıcı nöbetler meydana gelir. En yaygın görülen tipinde; saatlerce ya da günlerce süren bilateral kas kontraksiyonları ile karakterize olan epilepsi nöbeti tipi aşağıdakilerden hangisidir?",
+   options:["Jeneralize Epileptikus","Status Epileptikus","Miyoklonik Nöbetler","Basit Kısmi / Fokal Nöbetler","Kompleks Kısmi Nöbetler"], correct:1},
+  {q:"Aşağıdakilerden hangisi yarık dudak–yarık damak için doğru değildir?",
+   options:["Yarık dudak–yarık damak birlikte de görülebilir, tek başına da görülebilir","Tek ya da çift taraflı olabilirler","Yarık dudak–yarık damak anomalilerinde beslenme ile ilgili sorunlar görülebilir","Ameliyattan 2 saat sonra emzirmeye başlanabilir","Yarık damağı olan çocuklarda konuşma bozuklukları görülebilir"], correct:3},
+  {q:"Aşağıdakilerden hangisi, 1-3 yaş arası bir çocuğun hastaneye yatma sürecinde inkâr ve kopma evresinde sergilediği bir davranış olabilir?",
+   options:["Ebeveynlerinin yanında olmadığı her an ağlaması","Ebeveyn ziyarete geldiğinde onları görmezden gelmesi","Agresif davranışlar sergileyerek çevresine zarar vermesi","Fiziksel temas kurma ihtiyacının artması","Uyku ve beslenme düzeninin normale dönmesi"], correct:1},
+  {q:"Aşağıdaki hemşirelik girişimlerinden hangisi, 0-1 yaş arası bir bebeğin hastane sürecinde temel güven duygusunun gelişimine en doğrudan katkıda bulunur?",
+   options:["Her işlem öncesi bebeğe bilgi verilmesi","Anneyi hatırlatan bir objenin bebekle bırakılması","Tüm tıbbi işlemlerin ağrısız yapılması","Yoğun bakımda bebeğin tek başına kalmasının sağlanması","Bebeğin yeni oyuncaklarla tanıştırılması"], correct:1},
+  {q:"I. Yeni cinsel hedefler oluşturma ve yeni sevgi objeleri bulma dönemidir. II. Bastırılmış olan cinsel dürtüler yeniden ortaya çıkar. III. Cinsel gelişim olgunlaşır ve cinsiyet hormonlarının üretimi başlar. IV. Kimlik gelişimi açısından en önemli evrelerden biridir. Yukarıda verilen özellikler hangi yaş döneminin temel özellikleridir?",
+   options:["Oral dönem","Anal dönem","Fallik dönem","Latent (Gizlilik) dönem","Genital dönem"], correct:4},
+  {q:"Omfalosel tanısı almış bir yenidoğanda cerrahi öncesi dönemde sıvı kaybını ve enfeksiyonu önleme amacıyla hemşirenin aşağıdaki uygulamalardan hangisini tercih etmemesi gerekir?",
+   options:["Organları serum fizyolojik ile ıslatılmış steril gazlı bezle örtmek","Bebeği sırtüstü pozisyonda yatırmak","Parenteral sıvı desteği sağlamak","Bebeği ısı kaybını önlemek için sıcak battaniyeye sarmak","Organların üzerine kuru steril bez yerleştirmek"], correct:4},
+  {q:"Anoreksiya nervozanın en belirgin özelliği aşağıdakilerden hangisidir?",
+   options:["Aşırı yeme atakları ve ardından kusma","Kilo almaktan yoğun korku ve aşırı zayıflık","Uyku bozuklukları","Madde kullanımı","Sürekli egzersiz yapma isteği"], correct:1},
+  {q:"Krup hastalığının en tipik klinik bulgusu aşağıdakilerden hangisidir?",
+   options:["İnce, hırıltılı solunum sesi (wheezing)","Islak ve verimli balgam","Havlar tarzda öksürük ve inspiratuvar stridor","Yüksek ateş ve döküntü","Göğüs ağrısı ve prodüktif öksürük"], correct:2},
+  {q:"Aşağıdakilerden hangisi Fallot Tetralojisini oluşturan dört kalp anomalisi arasında yer almaz?",
+   options:["Ventriküler septal defekt (VSD)","Pulmoner stenoz","Atrial septal defekt (ASD)","Aortanın sağ ventriküle de açılması (overriding aorta)","Sağ ventrikül hipertrofisi"], correct:2},
+  {q:"Aşağıdaki aşılardan hangisi canlı zayıflatılmış (attenue) bir aşı değildir?",
+   options:["BCG (Tüberküloz aşısı)","Oral polio aşısı (OPV)","Kızamık, Kabakulak, Kızamıkçık (KKK) aşısı","Hepatit B aşısı","Suçiçeği (Varicella) aşısı"], correct:3},
+  {q:"Kızamık-Kabakulak-Kızamıkçık (KKK) aşısı aşağıdaki hangi yaşlarda uygulanır?",
+   options:["6 ay ve 12 ay","12 ay ve 48 ay","9 ay ve 18 ay","2 ay ve 6 ay","18 ay ve 6 yaş"], correct:1},
+  {q:"Kemoterapi alan ve mutlak nötrofil sayısı (MNS) 500/mm³ olan bir pediatrik hasta için aşağıdakilerden hangisi hemşirenin nötropenik diyet ve bakım uygulamaları kapsamında öncelikli sorumluluklarından biridir?",
+   options:["Hastanın günlük sıvı alımını 3 litreye çıkarmak","Çiğ sebze-meyve tüketimi konusunda aileyi bilgilendirmek","Yüksek kalorili fast food tüketimini teşvik etmek","Liften zengin çiğ kuru yemişleri önererek kabızlığı önlemek","Sadece vitamin takviyesi ile bağışıklığı artırmaya çalışmak"], correct:1}
+];
+
 const TEST_1 = [
   {q:"Aşağıdakilerden hangisi çocuk sağlığı hemşireliğinin temel amaçlarından biri değildir?",
    options:["Her çocuk ve aile için en üst düzeyde sağlıklı olmayı sağlamak","Risk altındaki çocuk ve aileleri erken dönemde belirlemek","Çocuk hasta olduğunda büyüme ve gelişmesini kolaylaştırmak","Yalnızca hastane ortamındaki tedavi edici girişimlere odaklanmak","Bakımın kalitesini sürekli geliştirmek"], correct:3},
@@ -783,7 +946,8 @@ const TEST_5 = [
    options:["Bebeğin dik pozisyonda beslenmesini sağlamak","Beslenme güçlüğünü göz ardı etmek","Aileyi bebeğe dokunmaktan kaçınması için uyarmak","Tartı kontrolünü gereksiz görmek","Her durumda ağızdan yoğun miktarda besin vermek"], correct:0}
 ];
 
-const TESTS = [TEST_1, TEST_2, TEST_3, TEST_4, TEST_5];
+const TESTS = [TEST_ORIGINAL, TEST_1, TEST_2, TEST_3, TEST_4, TEST_5];
+const TEST_LABELS = ["Orijinal Test","Test 1","Test 2","Test 3","Test 4","Test 5"];
 let currentTestIndex = 0;
 let QUESTIONS = TESTS[currentTestIndex];
 
@@ -810,8 +974,9 @@ function switchTest(idx){
   document.querySelectorAll('.test-tab').forEach(t=>{
     t.classList.toggle('active', +t.dataset.test === idx);
   });
-  document.getElementById('eyebrow').textContent = `Test ${idx+1}`;
+  document.getElementById('eyebrow').textContent = TEST_LABELS[idx];
   document.getElementById('meta-count').textContent = QUESTIONS.length;
+  document.getElementById('stat-total').textContent = QUESTIONS.length;
   document.getElementById('final-card').classList.remove('show');
   document.getElementById('ring-text').textContent = '0%';
   document.getElementById('score-circle').style.strokeDashoffset = 439.82;
