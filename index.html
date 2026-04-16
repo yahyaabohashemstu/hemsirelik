@@ -324,13 +324,14 @@
 
   /* test tabs */
   .test-tabs{
-    display:inline-flex;gap:6px;padding:6px;
+    display:inline-flex;flex-wrap:wrap;gap:6px;padding:6px;
     background:var(--glass);border:1px solid var(--border);
     border-radius:16px;margin-top:28px;
     backdrop-filter:blur(10px);
+    justify-content:center;
   }
   .test-tab{
-    padding:10px 22px;border-radius:11px;
+    padding:10px 18px;border-radius:11px;
     background:transparent;border:none;cursor:pointer;
     color:var(--text-dim);font-family:inherit;
     font-size:14px;font-weight:600;letter-spacing:.2px;
@@ -415,16 +416,11 @@
       </span>
     </div>
     <div class="test-tabs" role="tablist" id="test-tabs">
-      <button class="test-tab active" role="tab" data-test="0">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        Test 1
-        <span class="test-tab-badge">30</span>
-      </button>
-      <button class="test-tab" role="tab" data-test="1">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Test 2
-        <span class="test-tab-badge">30</span>
-      </button>
+      <button class="test-tab active" role="tab" data-test="0">Test 1<span class="test-tab-badge">30</span></button>
+      <button class="test-tab" role="tab" data-test="1">Test 2<span class="test-tab-badge">30</span></button>
+      <button class="test-tab" role="tab" data-test="2">Test 3<span class="test-tab-badge">30</span></button>
+      <button class="test-tab" role="tab" data-test="3">Test 4<span class="test-tab-badge">30</span></button>
+      <button class="test-tab" role="tab" data-test="4">Test 5<span class="test-tab-badge">30</span></button>
     </div>
   </section>
 
@@ -598,7 +594,196 @@ const TEST_2 = [
    options:["Kese ile örtülü olması","Eşlik eden anomalilerin çok yaygın olması","Cerrahinin acil olmaması","Organların kese olmadan karın dışında bulunması","Göbek kordonu içinde yer alması"], correct:3}
 ];
 
-const TESTS = [TEST_1, TEST_2];
+const TEST_3 = [
+  {q:"Aşağıdakilerden hangisi çocuk sağlığını korumaya yönelik uluslararası örgütlerden biridir?",
+   options:["UNICEF","NATO","OPEC","UEFA","IMF"], correct:0},
+  {q:"Birincil (primer) koruma için aşağıdaki örneklerden hangisi doğrudur?",
+   options:["Yürüyemeyen çocuğa tekerlekli sandalye temin edilmesi","Metabolik hastalıkların yenidoğan döneminde taranması","Anne sütü ile beslenmenin desteklenmesi","Fizik tedavi sonrası rehabilitasyon uygulanması","Komplikasyon gelişince cerrahi yapılması"], correct:2},
+  {q:"İkincil (sekonder) koruma aşağıdakilerden hangisini ifade eder?",
+   options:["Hastalık oluşmadan önce korumayı","Erken tanı ile hastalığın ilerlemesini önlemeyi","Sakatlık sonrası yaşamı kolaylaştırmayı","Sadece rehabilitasyonu","Yalnızca cerrahi tedaviyi"], correct:1},
+  {q:"Aşağıdakilerden hangisi çocuk sağlığının değerlendirilmesinde kullanılan önemli sağlık ölçütlerinden biridir?",
+   options:["Saç rengi","Beş yaş altı ölüm hızı","Göz rengi","El tercihi","Diş sayısı"], correct:1},
+  {q:"Bebek ölümlerini etkileyen faktörlerden hangisi anneye ait faktörler arasında yer alır?",
+   options:["Akraba evliliği","Doğum öncesi bakım","Annenin yaşı","Kötü çevrede yaşama","Geleneksel uygulamalar"], correct:2},
+  {q:"Aşağıdakilerden hangisi güç koşulları altındaki çocuklar arasında sayılmaz?",
+   options:["İstismara uğramış çocuklar","Çalışan çocuklar","Sokakta yaşayan çocuklar","Engelli çocuklar","Rutin aşıları tam olan çocuklar"], correct:4},
+  {q:"Freud'a göre 0–1 yaş arasındaki dönem aşağıdakilerden hangisidir?",
+   options:["Anal dönem","Oral dönem","Fallik dönem","Latent dönem","Genital dönem"], correct:1},
+  {q:"Erikson'a göre 6–11 yaş döneminin temel çatışması aşağıdakilerden hangisidir?",
+   options:["Girişimciliğe karşı suçluluk","Temel güvene karşı güvensizlik","Üreticiliğe karşı aşağılık duygusu","Kimliğe karşı rol karmaşası","Yakınlığa karşı uzaklık"], correct:2},
+  {q:"Piaget'e göre 7–12 yaş arası çocuk hangi dönemdedir?",
+   options:["İşlem öncesi dönem","Duyusal-motor dönem","Somut işlemler dönemi","Soyut işlemler dönemi","Genital dönem"], correct:2},
+  {q:"Sullivan'ın kişilerarası ilişkiler kuramına göre 9–12 yaş döneminde aşağıdakilerden hangisi önem kazanır?",
+   options:["Temel güvenin oluşması","Aynı cinsiyetten yakın bir arkadaş","Eş seçimi","Meslek seçimi","Bebekle fiziksel temas"], correct:1},
+  {q:"Kohlberg'e göre 7–12 yaşlar ağırlıklı olarak hangi düzeydedir?",
+   options:["Gelenek öncesi düzey","Geleneksel düzey","Gelenek sonrası düzey","Soyut ahlak düzeyi","Postformal düzey"], correct:1},
+  {q:"Bandura'nın sosyal öğrenme kuramına göre çocuklar en çok nasıl öğrenir?",
+   options:["Sadece kalıtımla","Gözlem ve model alma ile","Yalnızca ceza ile","Sadece oyunla","Yalnız içgüdüyle"], correct:1},
+  {q:"Bronfenbrenner'e göre çocuğun ev, okul ve arkadaş çevresi hangi sistemi ifade eder?",
+   options:["Makrosistem","Kronosistem","Mikrosistem","Ekzosistem","Mezosistem"], correct:2},
+  {q:"Aşağıdakilerden hangisi intrauterin faktörlerden biridir?",
+   options:["Arkadaş grubu","Annenin sigara içmesi","Okul ortamı","Kitle iletişim araçları","Komşular"], correct:1},
+  {q:"Oyunun çocuğa sağladığı yararlardan hangisi yanlıştır?",
+   options:["Dil gelişimini destekler","Duygularını ifade etmesini sağlar","Sosyalleşmeye katkı sağlar","Saldırganlık dürtüsünü boşaltabilir","Bilişsel gelişim üzerinde etkisi yoktur"], correct:4},
+  {q:"0–1 yaş döneminde yabancı anksiyetesi ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["Doğumda belirgindir","Yaklaşık 2 yaşında kaybolabilir","Ergenlikte başlar","Sadece okul çağında görülür","Çocuğun gelişimiyle ilişkili değildir"], correct:1},
+  {q:"Yenidoğanda mide kapasitesi ile ilgili doğru eşleştirme hangisidir?",
+   options:["İlk gün 80–150 ml","Üçüncü gün 45–60 ml","İlk hafta 22–27 ml","İlk gün 5–7 ml","İlk ay 22–27 ml"], correct:3},
+  {q:"Aşağıdakilerden hangisi 6. ay civarında beklenen fiziksel gelişim özelliklerinden biridir?",
+   options:["Doğum ağırlığının üç katına çıkması","Alt iki kesici dişin çıkması","Ön fontanelin kapanması","Yardımsız yürüme","Baş ve göğüs çevresinin eşitlenmesi"], correct:1},
+  {q:"12 aylık çocukta aşağıdakilerden hangisi beklenen özelliklerden biridir?",
+   options:["Desteksiz emekleyemez","6-8 dişi vardır","Baş çevresi 34.5 cm'dir","Doğum kilosu iki katına çıkar","Hiç ayakta duramaz"], correct:1},
+  {q:"Çocuklarda ayrılık anksiyetesini azaltmak için aşağıdakilerden hangisi uygundur?",
+   options:["Uykuda bırakıp sessizce ayrılmak","Ebeveyn geliş-gidişini rutinlerle anlatmak","Ayrılığı uzatmak","Çocuğun oyununu kesmek","Her ağlamasında cezalandırmak"], correct:1},
+  {q:"Okul çağındaki çocuğun hastaneye yatışında önemli endişelerden biri aşağıdakilerden hangisidir?",
+   options:["Kastrasyon korkusu","Okulda başarısız olma korkusu","Sadece yabancılardan korkma","Anneye bağımlılıkta artış","Mastürbasyon davranışı"], correct:1},
+  {q:"Tanılama sürecinde adölesandan öykü alırken aşağıdakilerden hangisine odaklanılması uygundur?",
+   options:["Sadece doğum kilosu","Alkol, sigara ve arkadaş ilişkileri","Yalnızca refleksler","Sadece diş çıkarma zamanı","Sadece oyun tercihleri"], correct:1},
+  {q:"Aşağıdakilerden hangisi prenatal öyküde sorgulanır?",
+   options:["Tuvalet eğitimi","Gebelikte geçirilen hastalıklar","Okul başarısı","Akran ilişkileri","Süt dişlerinin sayısı"], correct:1},
+  {q:"Çocuklarda fiziksel değerlendirmede arka fontanel normalde ne zaman kapanır?",
+   options:["Doğumda","2-3. ayda","6. ayda","12. ayda","18. ayda"], correct:1},
+  {q:"Beden kitle indeksi çocuklarda hangi yaş aralığında kullanılır?",
+   options:["0-1 yaş","1-2 yaş","2-20 yaş","6-12 yaş","Sadece adölesan dönemde"], correct:2},
+  {q:"3 yaşından küçük çocuklarda kulağa ilaç uygularken kulak kepçesi nasıl çekilir?",
+   options:["Yukarı ve geriye","Aşağı ve geriye","Sadece yana doğru","Öne ve yukarı","Aşağı ve öne"], correct:1},
+  {q:"6 yaşın altındaki çocuklarda solunum sayısı en doğru nasıl değerlendirilir?",
+   options:["Sadece oskültasyonla","Göğüs ve abdomenin hareketleri gözlenerek","Ebeveyne sorularak","Nabız sayılarak","Yalnız uyurken"], correct:1},
+  {q:"Aşağıdakilerden hangisi anormal solunum seslerinden biridir ve astımda duyulabilir?",
+   options:["Veziküler ses","Bronkoveziküler ses","Wheezing","Bronşiyal ses","Sighing"], correct:2},
+  {q:"Kan basıncı ölçümünde çocuklarda önerilen yaklaşım aşağıdakilerden hangisidir?",
+   options:["Her zaman sol bacaktan ölçmek","Kol kalp hizasında olmalı ve mümkünse sağ koldan ölçülmeli","Manşon çok dar olmalı","Yalnızca yatar pozisyonda ölçülmeli","3 yaşından önce ve sonra hiç ölçülmemeli"], correct:1},
+  {q:"Erkek çocuk genital değerlendirmesinde aşağıdakilerden hangisi özellikle gözlenir?",
+   options:["Sadece anal refleks","Skrotum, üretral meatus ve penis","Yalnızca böbrekler","Sadece karın çevresi","Süt dişleri"], correct:1}
+];
+
+const TEST_4 = [
+  {q:"Aşağıdakilerden hangisi çocuk sağlığı hemşireliğinde aile merkezli bakımın temel özelliklerinden biridir?",
+   options:["Aileyi bakımın dışında tutmak","Aileyi bakımın primer ünitesi olarak görmek","Bilgiyi yalnız hekimin vermesi","Çocuğun tüm kararlarını sağlık ekibinin alması","Ailenin yalnız taburculukta sürece katılması"], correct:1},
+  {q:"Atravmatik bakımın temel hedefi aşağıdakilerden hangisidir?",
+   options:["Çocuğun hastaneye tamamen alışmasını sağlamak","Fiziksel ve psikolojik sıkıntıları en aza indirmek","Tedaviyi yalnız cerrahi girişimlerle yürütmek","Aileyi çocuktan uzaklaştırmak","Hastanede kalış süresini uzatmak"], correct:1},
+  {q:"Erikson'a göre 3–6 yaş döneminin temel psikososyal çatışması aşağıdakilerden hangisidir?",
+   options:["Temel güvene karşı güvensizlik","Özerkliğe karşı utanç ve şüphe","Girişimciliğe karşı suçluluk","Çalışkanlığa karşı aşağılık duygusu","Kimliğe karşı rol karmaşası"], correct:2},
+  {q:"Piaget'e göre 7–12 yaş çocuğu hangi bilişsel dönemdedir?",
+   options:["Duyusal-motor dönem","İşlem öncesi dönem","Somut işlemler dönemi","Soyut işlemler dönemi","Genital dönem"], correct:2},
+  {q:"Aşağıdakilerden hangisi büyümenin bir özelliğidir?",
+   options:["Nitelik belirten değişiklikleri ifade eder","Davranışların kalitesindeki değişimi anlatır","Ölçülebilen niceliksel bir değişkendir","Yalnız çevresel uyaranlarla oluşur","Psikososyal değişiklikleri kapsar"], correct:2},
+  {q:"Aşağıdakilerden hangisi 1–3 yaş çocuğunda hastaneye yatış sırasında görülen temel tepkilerden biridir?",
+   options:["Kimlik karmaşası","Ayrılık anksiyetesi","Üretkenlik duygusunda azalma","Soyut ölüm korkusu","Meslek seçimi kaygısı"], correct:1},
+  {q:"Ayrılık anksiyetesinin evreleri aşağıdakilerden hangisinde doğru verilmiştir?",
+   options:["Protesto – ümitsizlik – inkâr ve kopma","Şok – öfke – yas","Ağlama – öfke – uyum","İnkar – pazarlık – kabullenme","Bağımlılık – regresyon – uyum"], correct:0},
+  {q:"Aşağıdakilerden hangisi 3–6 yaş çocuğunda hastanede görülen başlıca stresörlerden biri değildir?",
+   options:["Kastrasyon korkusu","Yalnız kalma ve terk edilme","Yaralanma korkusu","Bedeni üzerindeki kontrolünü kaybetme","Okul başarısızlığı ve öğretmen beğenisini kaybetme"], correct:4},
+  {q:"Adölesanların hastane ortamına uyumunu kolaylaştıran uygulama aşağıdakilerden hangisidir?",
+   options:["Mahremiyetin kısıtlanması","Arkadaş kabul etmesine izin verilmesi","Tüm kuralların katılaştırılması","Kararlara katılmasının engellenmesi","Ayna ve kişisel eşyalardan uzak tutulması"], correct:1},
+  {q:"Sağlığın değerlendirilmesinde bebeklik döneminde iletişim kurarken aşağıdakilerden hangisi önerilir?",
+   options:["Aşırı uyaran verilmesi","Yüksek sesle konuşulması","Göz temasının sürdürülmesi","Çocuğun yanında korkutucu durumların tartışılması","Öğüt verici bir dil kullanılması"], correct:2},
+  {q:"Aşağıdakilerden hangisi prenatal öyküde sorgulanan bilgilerden biridir?",
+   options:["Tuvalet eğitimi","Gebelikte annenin sağlık durumu","Okul başarısı","Arkadaş ilişkileri","Akran baskısı"], correct:1},
+  {q:"Büyüme izlem grafiğinde normal alt ve üst sınırlar genellikle hangi persantiller arasındadır?",
+   options:["1 ve 99","3 ve 97","10 ve 90","25 ve 75","5 ve 95"], correct:1},
+  {q:"Beden kitle indeksi çocuklarda genellikle hangi yaş aralığında kullanılır?",
+   options:["0–1 yaş","0–2 yaş","2–20 yaş","6–12 yaş","12–18 yaş"], correct:2},
+  {q:"Aşağıdakilerden hangisi çocuklarda fiziksel değerlendirmede anatomik-fizyolojik farklılıklardan biridir?",
+   options:["Kafa travması riskinin erişkinden daha az olması","Metabolik hızın daha yavaş olması","Dilinin havayoluna göre daha büyük olması","Sıvı gereksiniminin daha az olması","Hipotermi riskinin daha düşük olması"], correct:2},
+  {q:"0–6 ay beslenmesi ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["İlk 6 ay yalnız su verilmelidir","İlk 6 ay yalnız anne sütü önerilir","3. ayda yoğurt başlanmalıdır","4. ayda meyve suyu zorunludur","Anne sütü 6. ayda kesilmelidir"], correct:1},
+  {q:"Kolostrum ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["Olgun sütten daha az antikor içerir","Doğumdan sonraki ilk 5–7 günde salgılanır","Yağ ve laktoz oranı olgun sütten daha fazladır","Barsak olgunlaşmasına katkısı yoktur","Yenidoğana tek başına yetmez"], correct:1},
+  {q:"Ek besinlere geçişte aşağıdakilerden hangisi yanlıştır?",
+   options:["Yeni besinler az miktarda başlanmalıdır","Yeni besinler bebek açken denenebilir","Tuzlu ve baharatlı besinler ilk aşamada verilmemelidir","Hoşlanmadığı yiyecekler zorla verilmelidir","Yeni besinler arasında birkaç gün ara bırakılmalıdır"], correct:3},
+  {q:"Protein-enerji malnütrisyonu ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["Yalnız adölesanlarda görülür","Enerji ve protein fazlalığı sonucu oluşur","Özellikle beş yaş altı çocuklarda önemli bir sorundur","Enfeksiyonlarla ilişkisi yoktur","Sadece genetik nedenlidir"], correct:2},
+  {q:"Aşağıdakilerden hangisi çocuklarda ilaç uygulamalarında güvenli uygulama ilkelerinden biri değildir?",
+   options:["Doğru çocuk","Doğru doz","Doğru yol","Doğru hava koşulu","Doğru zaman"], correct:3},
+  {q:"Çocuklarda ilaç dozu genellikle aşağıdakilere göre hesaplanır:",
+   options:["Sadece yaşa göre","Sadece boya göre","Kilo ve/veya vücut yüzey alanına göre","Erişkin dozunun yarısı olarak","Cinsiyete göre"], correct:2},
+  {q:"Oral ilaç uygulamasında aşağıdakilerden hangisi yanlıştır?",
+   options:["İlaç gerektiğinde uygun ölçü aracıyla verilmelidir","Süt ya da mama içine ilaç eklenmemelidir","İlaç ceza gibi sunulmamalıdır","İlacı şekere benzetmek güvenlidir","Çocuk ilaç içmeye direnirse kısa süre sonra yeniden denenebilir"], correct:3},
+  {q:"3 yaşına kadar intramüsküler ilaç uygulamasında tercih edilen kas aşağıdakilerden hangisidir?",
+   options:["Deltoid","Vastus lateralis","Dorsogluteal","Gluteus maksimus","Ventrogluteal"], correct:1},
+  {q:"Aşağıdakilerden hangisi ventrogluteal bölge için doğrudur?",
+   options:["Yenidoğanda ilk tercihtir","3 yaşından büyük çocuklarda tercih edilir","4–5 yaş sonrası deltoidden önce kullanılır","Bebeklerde gluteus maksimus ile aynıdır","Sadece erişkinlerde kullanılır"], correct:1},
+  {q:"Yarık dudak-yarık damaklı bebekte hemşirelik bakımının önceliklerinden biri aşağıdakilerden hangisidir?",
+   options:["Beslenme ve tartı kontrolü","Yoğun egzersiz programı","Erken katı gıda yüklemesi","Aileyi bebekten uzaklaştırmak","Ağlamayı tamamen engellemek"], correct:0},
+  {q:"Özefagus atrezisi / trakea-özefageal fistülde tipik klinik bulgu aşağıdakilerden hangisidir?",
+   options:["İlk beslenmede öksürükle birlikte siyanoz ve dispne","Devamlı poliüri","Sarılık ve peteşi","Şiddetli diyare olmadan tüm bulguların kaybolması","Hipertansiyon"], correct:0},
+  {q:"Omfaloselde cerrahi öncesi hemşirelik bakımında aşağıdakilerden hangisi uygundur?",
+   options:["Kese üzerine kuru bez bastırmak","Bebeği yüzüstü yatırmak","Serum fizyolojik ile ıslatılmış steril bezle keseyi örtmek","Ağızdan bol beslemek","Keseyi açık bırakmak"], correct:2},
+  {q:"Gastroşizis ile omfalosel karşılaştırıldığında gastroşizis için doğru ifade aşağıdakilerden hangisidir?",
+   options:["Organlar kese ile örtülüdür","Cerrahi acil değildir","Eşlik eden anomaliler daha yaygındır","Abdominal organlar kesesizdir","Genellikle göbek kordonu içindedir"], correct:3},
+  {q:"Hirschsprung hastalığında tipik bulgu aşağıdakilerden hangisidir?",
+   options:["İlk 48 saatte abdominal distansiyon ve konstipasyon","Yaygın hematüri","Persistan hipertansiyon","Aşırı salivasyon olmadan tam iyilik hali","Yüksek iştah artışı"], correct:0},
+  {q:"Crohn hastalığı ile ülseratif kolit karşılaştırıldığında Crohn hastalığı için daha tipik olan özellik aşağıdakilerden hangisidir?",
+   options:["Yalnız kolon ve rektumu tutması","Sadece mukoza-submukozayı etkilemesi","Sürekli ve simetrik lezyonlar yapması","Barsak duvarının tüm katlarını tutabilmesi","Rektal kanamanın daima yaygın olması"], correct:3},
+  {q:"Aşağıdakilerden hangisi çocukların sağlığını değerlendirmede kullanılan önemli göstergelerden biridir?",
+   options:["Neonatal ölüm hızı","Erişkinlerde osteoporoz sıklığı","Toplumdaki araç sayısı","Yalnız okul başarı oranı","Anne sütü dışı tüm beslenme biçimlerinin ortalaması"], correct:0}
+];
+
+const TEST_5 = [
+  {q:"Aşağıdakilerden hangisi çocuk sağlığı hemşiresinin primer rollerinden biridir?",
+   options:["Bakım verici","Yalnızca maliyet denetleyici","Sadece laboratuvar teknisyeni gibi çalışma","Yalnızca taburculukta rol alma","Tıbbi tanı koyma yetkisini tek başına kullanma"], correct:0},
+  {q:"Aşağıdakilerden hangisi vaka yönetiminin temel amaçlarından biridir?",
+   options:["Bakımın sürekliliğini ve kaynak kullanımının etkinliğini artırmak","Aileyi karar sürecinin dışında bırakmak","Yalnızca cerrahi hastalarda kullanılmak","Sağlık ekibi işbirliğini azaltmak","Taburculuk sonrası izlemi gereksiz görmek"], correct:0},
+  {q:"Aşağıdakilerden hangisi çocuk sağlığına genel bakış kapsamında sosyal pediatrinin ilgi alanlarından biridir?",
+   options:["Çocuk sağlığı üzerine siyasal, çevresel ve ailevi etmenlerin etkisi","Sadece ameliyat teknikleri","Yalnız erişkin yoğun bakım sorunları","Sadece farmakolojik hesaplamalar","Sadece laboratuvar cihazlarının kullanımı"], correct:0},
+  {q:"Birincil (primer) koruma aşağıdakilerden hangisini ifade eder?",
+   options:["Hastalık oluşmadan önce koruyucu hizmet sunulmasını","Hastalığın komplikasyonlarının rehabilitasyonunu","Yalnız yoğun bakım tedavisini","Sadece cerrahi düzeltmeyi","Ölüm sonrası kayıt işlemlerini"], correct:0},
+  {q:"Aşağıdakilerden hangisi çocuk sağlığını korumaya yönelik uluslararası örgütlerden biridir?",
+   options:["UNICEF","NATO","FIFA","OECD yalnız mali vergi birimi","INTERPOL"], correct:0},
+  {q:"Erikson'a göre 3–6 yaş döneminin temel psikososyal çatışması aşağıdakilerden hangisidir?",
+   options:["Girişimciliğe karşı suçluluk","Temel güvene karşı güvensizlik","Yakınlığa karşı uzaklık","Üretkenliğe karşı durgunluk","Benlik bütünlüğüne karşı umutsuzluk"], correct:0},
+  {q:"Piaget'e göre somut işlemler döneminin temel özelliklerinden biri aşağıdakilerden hangisidir?",
+   options:["Sıralama, sınıflandırma ve karşılaştırma becerilerinin gelişmesi","Reflekslerin tek öğrenme kaynağı olması","Mantıksal düşüncenin hiç olmaması","Sadece sembolik oyunun bulunması","Kimlik karmaşasının belirginleşmesi"], correct:0},
+  {q:"Aşağıdakilerden hangisi Kohlberg'e göre geleneksel düzey özelliklerinden biridir?",
+   options:["Başkalarının onayını almak ve kurallara uymak","Doğru-yanlışı ayırt edememek","Evrensel etik ilkeleri tam içselleştirmek","Sadece haz ve korkuya göre davranmak","Toplumsal kuralları reddetmek"], correct:0},
+  {q:"Bandura'nın sosyal öğrenme kuramına göre çocuklar davranışları en çok nasıl öğrenir?",
+   options:["Gözlem ve model alma yoluyla","Yalnız genetik miras ile","Sadece reflekslerle","Yalnız ödül olmaksızın rastlantıyla","Sadece doğrudan ceza ile"], correct:0},
+  {q:"Bronfenbrenner'in ekolojik kuramına göre çocuğun evi ile okulu arasındaki ilişki hangi sistem içinde değerlendirilir?",
+   options:["Mezosistem","Mikrosistem","Makrosistem","Kronosistem","Ekzosistem"], correct:0},
+  {q:"Aşağıdakilerden hangisi büyüme ve gelişmeyi etkileyen intrauterin faktörlerden biridir?",
+   options:["Maternal malnütrisyon","Sadece çocuğun okul başarısı","Yalnız kardeş sayısı","Oyun türü tercihi","İlkokul öğretmeni yaklaşımı"], correct:0},
+  {q:"Oyunun çocuğa sağladığı yararlardan biri aşağıdakilerden hangisidir?",
+   options:["Duygularını ifade etmesini ve sosyalleşmesini desteklemek","Motor gelişimi yavaşlatmak","Yaratıcılığı azaltmak","Ahlak kurallarına uyumu bozmak","Dil gelişimini engellemek"], correct:0},
+  {q:"Yenidoğanda sağlık değerlendirmesinde prenatal öykü alınırken aşağıdakilerden hangisi sorgulanır?",
+   options:["Annenin gebelikteki sağlık durumu ve prenatal bakım öyküsü","Çocuğun lise başarısı","Adölesanın arkadaş ilişkileri","Okul devamsızlığı","Meslek seçimi planı"], correct:0},
+  {q:"Aşağıdakilerden hangisi postnatal öykü kapsamındadır?",
+   options:["Solunum sıkıntısı, sarılık ve doğum sonrası beslenme güçlüğü","Yalnızca kalıcı dişlerin sayısı","Üniversite tercihleri","Evlilik öyküsü","Mesleki doyum düzeyi"], correct:0},
+  {q:"Aşağıdakilerden hangisi büyüme izleminde anormal kabul edilir?",
+   options:["Çocuğun persantil eğrisinde önceki izlemine göre belirgin düşüş göstermesi","Yaşa uygun persantilde izlenmesi","Cinsiyete uygun eğride değerlendirilmesi","Ağırlık ve boyun birlikte değerlendirilmesi","Baş çevresinin yaşa göre izlenmesi"], correct:0},
+  {q:"Çocuklarda BKİ kullanımı ile ilgili doğru seçenek hangisidir?",
+   options:["2–20 yaş arasında yaş ve cinsiyete göre değerlendirilir","Yalnız yenidoğanda kullanılır","Boydan bağımsızdır","Sadece erişkinlerde anlamlıdır","Malnutrisyon ve obezite hakkında bilgi vermez"], correct:0},
+  {q:"Burun kanatlarının solunuma katılması aşağıdakilerden hangisinin belirtisidir?",
+   options:["Solunum sıkıntısının","Normal diş gelişiminin","İyi hidrasyonun","Normal uyku evresinin","Hafif açlığın"], correct:0},
+  {q:"3 yaşından küçük çocukta kulak değerlendirmesinde kulak kepçesi nasıl çekilmelidir?",
+   options:["Aşağı ve arkaya doğru","Yukarı ve öne doğru","Sadece yana doğru","Çekilmemelidir","Yukarı ve arkaya doğru"], correct:0},
+  {q:"Aşağıdakilerden hangisi anormal solunum seslerinden biridir?",
+   options:["Stridor","Normal veziküler ses","Sessiz inspirasyon","Fizyolojik bronkoveziküler ses","Düzenli hafif burun solunumu"], correct:0},
+  {q:"Kussmaul solunum aşağıdaki durumlardan hangisinde tipik olarak görülür?",
+   options:["Diyabetik ketoasidoz","Basit üst solunum yolu enfeksiyonu","Normal uyku","Sadece anksiyete olmadan sakin çocukta","Yalnız otitis media"], correct:0},
+  {q:"Kalbin oskültasyonunda 7 yaş ve altı çocuklarda apeks en iyi hangi noktadan duyulur?",
+   options:["Sol meme başı hizasında 4. interkostal aralık","Sağ meme başı hizasında 2. interkostal aralık","Ksifoid çıkıntı üzerinde","Umbilikus çevresinde","Skapula altında"], correct:0},
+  {q:"Çocuklarda kan basıncı ölçümü ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["Kol kalp hizasında olmalı ve mümkünse sağ koldan ölçülmelidir","Manşon mümkün olduğunca dar seçilmelidir","Bebekte yalnız ayakta ölçülmelidir","Pozisyonun önemi yoktur","3 yaş altı ve üstünde hiçbir tarama önerilmez"], correct:0},
+  {q:"6–12 yaş döneminde beslenme için aşağıdakilerden hangisi önerilir?",
+   options:["Her sabah düzenli kahvaltı yapılmasının desteklenmesi","Açıkta satılan besinlerin özellikle teşvik edilmesi","Sadece şekerli içeceklerle enerji sağlanması","Öğün atlamanın normal kabul edilmesi","Demir eksikliği riskinin göz ardı edilmesi"], correct:0},
+  {q:"Adölesan beslenmesi ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["Bilinçli seçilmiş ara öğünler diyete olumlu katkı sağlayabilir","Düzensiz öğünler her zaman sağlıklıdır","Vücut ağırlığına ilişkin hiçbir ilgi yoktur","Ev dışında yemek yeme hiç sorun oluşturmaz","Enerji gereksinimi çocukluk çağından daha düşüktür"], correct:0},
+  {q:"Aşağıdakilerden hangisi kolostrumun özelliklerinden biridir?",
+   options:["Olgun süte göre daha fazla antikor ve antiinfektif protein içerir","Olgun sütten daha fazla laktoz içerir","Bağırsak olgunlaşmasına katkısı yoktur","Doğumdan aylar sonra salgılanır","Yenidoğanı hemorajik hastalıktan korumada rolü yoktur"], correct:0},
+  {q:"Oral ilaç uygulamasında aşağıdakilerden hangisi yanlıştır?",
+   options:["İlaç süt ya da mama içine karıştırılmalıdır","Çocuğun gelişim düzeyi göz önünde bulundurulmalıdır","Uygun ölçü aracı kullanılmalıdır","Çocuğa ilacın ceza olmadığı açıklanmalıdır","İlaç alırken direnirse kısa süre sonra yeniden denenebilir"], correct:0},
+  {q:"Göz damlası uygulamasında aşağıdakilerden hangisi doğrudur?",
+   options:["İlaç kornea üzerine damlatılmamalıdır","Akıntı varsa temizlik yapılmaz","Ağlayan bebeğe uygulama terapötik etkiyi artırır","Baş kontrolüne gerek yoktur","Uygulama sonrası iç kantustaki fazla ilaç silinmez"], correct:0},
+  {q:"İntravenöz ilaç uygulamasında çocuklarda aşağıdakilerden hangisine dikkat edilmelidir?",
+   options:["IV puşe tercihi konusunda ekstravazasyon riski düşünülmelidir","Önerilen sulandırıcıya uyulması gereksizdir","Veriliş süresi önemli değildir","Ayak venleri her yaşta ilk tercihtir","Çocuğun sık kullandığı el venleri öncelikle seçilmelidir"], correct:0},
+  {q:"İntramüsküler ilaç uygulamasında aşağıdakilerden hangisi doğrudur?",
+   options:["3 yaşından büyük çocuklarda ventrogluteal bölge tercih edilebilir","Bebeklerde gluteus maximus en uygun bölgedir","Deltoid yenidoğanda ilk seçenektir","Kas seçimi yaş ve ilaç miktarından bağımsızdır","Flakondan çekilen ilaçta iğne ucunun değiştirilmesi gereksizdir"], correct:0},
+  {q:"Yarık damaklı bir bebekte beslenme yönetimiyle ilgili uygun yaklaşım aşağıdakilerden hangisidir?",
+   options:["Bebeğin dik pozisyonda beslenmesini sağlamak","Beslenme güçlüğünü göz ardı etmek","Aileyi bebeğe dokunmaktan kaçınması için uyarmak","Tartı kontrolünü gereksiz görmek","Her durumda ağızdan yoğun miktarda besin vermek"], correct:0}
+];
+
+const TESTS = [TEST_1, TEST_2, TEST_3, TEST_4, TEST_5];
 let currentTestIndex = 0;
 let QUESTIONS = TESTS[currentTestIndex];
 
