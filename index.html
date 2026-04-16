@@ -322,6 +322,32 @@
     border-top:1px solid var(--border);margin-top:60px;
   }
 
+  /* test tabs */
+  .test-tabs{
+    display:inline-flex;gap:6px;padding:6px;
+    background:var(--glass);border:1px solid var(--border);
+    border-radius:16px;margin-top:28px;
+    backdrop-filter:blur(10px);
+  }
+  .test-tab{
+    padding:10px 22px;border-radius:11px;
+    background:transparent;border:none;cursor:pointer;
+    color:var(--text-dim);font-family:inherit;
+    font-size:14px;font-weight:600;letter-spacing:.2px;
+    transition:all .3s ease;position:relative;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .test-tab:hover:not(.active){color:var(--text);background:var(--glass-strong)}
+  .test-tab.active{
+    background:var(--accent-grad);color:#fff;
+    box-shadow:0 6px 20px -6px rgba(124,92,255,0.6);
+  }
+  .test-tab-badge{
+    background:rgba(255,255,255,0.15);color:inherit;
+    padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;
+  }
+  .test-tab:not(.active) .test-tab-badge{background:var(--glass-strong)}
+
   @keyframes fadeUp{
     from{opacity:0;transform:translateY(16px)}
     to{opacity:1;transform:translateY(0)}
@@ -371,13 +397,13 @@
 
 <main>
   <section class="hero">
-    <span class="eyebrow">Test 1</span>
+    <span class="eyebrow" id="eyebrow">Test 1</span>
     <h1>Çocuk Sağlığı ve Hastalıkları Hemşireliği</h1>
-    <p>Çoktan seçmeli 30 soruluk interaktif sınav simülasyonu. Her sorunun yanındaki <strong>Tekshir / Kontrol</strong> butonuna basarak cevabınızı anında doğrulayabilirsiniz.</p>
+    <p>Çoktan seçmeli interaktif sınav simülasyonu. Her sorunun yanındaki <strong>Kontrol Et</strong> butonuna basarak cevabınızı anında doğrulayabilirsiniz.</p>
     <div class="meta">
       <span class="meta-pill">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        30 Soru
+        <span id="meta-count">30</span> Soru
       </span>
       <span class="meta-pill">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>
@@ -385,8 +411,20 @@
       </span>
       <span class="meta-pill">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        7 Konu Başlığı
+        Pediatri Hemşireliği
       </span>
+    </div>
+    <div class="test-tabs" role="tablist" id="test-tabs">
+      <button class="test-tab active" role="tab" data-test="0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Test 1
+        <span class="test-tab-badge">30</span>
+      </button>
+      <button class="test-tab" role="tab" data-test="1">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Test 2
+        <span class="test-tab-badge">30</span>
+      </button>
     </div>
   </section>
 
@@ -434,7 +472,7 @@
 </footer>
 
 <script>
-const QUESTIONS = [
+const TEST_1 = [
   {q:"Aşağıdakilerden hangisi çocuk sağlığı hemşireliğinin temel amaçlarından biri değildir?",
    options:["Her çocuk ve aile için en üst düzeyde sağlıklı olmayı sağlamak","Risk altındaki çocuk ve aileleri erken dönemde belirlemek","Çocuk hasta olduğunda büyüme ve gelişmesini kolaylaştırmak","Yalnızca hastane ortamındaki tedavi edici girişimlere odaklanmak","Bakımın kalitesini sürekli geliştirmek"], correct:3},
   {q:"Aile merkezli bakım ile ilgili aşağıdaki ifadelerden hangisi doğrudur?",
@@ -497,16 +535,105 @@ const QUESTIONS = [
    options:["Yalnız kolon ve rektumu tutması","Sadece mukoza ve submukozayı etkilemesi","Sürekli ve simetrik lezyonlar yapması","Barsak duvarının tüm katlarını tutabilmesi","Rektal kanamanın daima yaygın olması"], correct:3}
 ];
 
+const TEST_2 = [
+  {q:"Çocuk sağlığı hemşiresinin savunucu rolü aşağıdakilerden hangisini en iyi açıklar?",
+   options:["Çocuğun ilaçlarını tek başına hazırlaması","Çocuk ve ailenin en üst düzeyde bakım almasına yardım etmesi","Sadece hekim istemlerini uygulaması","Araştırma sonuçlarını yayınlaması","Yalnızca taburculuk eğitimi vermesi"], correct:1},
+  {q:"Aşağıdakilerden hangisi vaka yönetiminin temel özelliklerinden biridir?",
+   options:["Bakım kararlarında ailenin dışlanması","Kaynakların etkili kullanımını ve bakımın sürekliliğini sağlaması","Yalnızca cerrahi hastalarda uygulanması","Sadece maliyeti azaltmaya odaklanması","Hemşirelik sürecini gereksiz kılması"], correct:1},
+  {q:"Büyüme ve gelişme bilgisinin hemşirelikte önemi ile ilgili aşağıdakilerden hangisi yanlıştır?",
+   options:["Normalden sapmaları fark etmeye yardım eder","Yaşa göre gereksinimleri belirlemeyi sağlar","Tüm çocuklardan aynı becerilerin beklenmesini sağlar","Ebeveyn danışmanlığını güçlendirir","Bakımın gelişim dönemine göre planlanmasını kolaylaştırır"], correct:2},
+  {q:"Freud'a göre 1–3 yaş döneminde odak bölge aşağıdakilerden hangisidir?",
+   options:["Oral bölge","Anal bölge","Genital bölge","Latent dönem","Superego dönemi"], correct:1},
+  {q:"Erikson'a göre 3–6 yaş dönemindeki çocukta olumlu gelişmesi beklenen temel duygu aşağıdakilerden hangisidir?",
+   options:["Temel güven","Özerklik","Girişimcilik","Kimlik kazanımı","Yakınlık"], correct:2},
+  {q:"Piaget'e göre somut işlemler dönemindeki çocuk için aşağıdakilerden hangisi daha tipiktir?",
+   options:["Soyut kavramları tam olarak çözümleme","Sıralama ve sınıflandırma yapabilme","Tamamen egosantrik düşünme","Nesne sürekliliğinin olmaması","Sembolik oyunun hiç görülmemesi"], correct:1},
+  {q:"Sullivan'ın kişilerarası ilişkiler kuramına göre preadölesan dönemde en önemli özellik aşağıdakilerden hangisidir?",
+   options:["Aynı cinsiyetten yakın arkadaşlığın önem kazanması","Temel reflekslerin gelişmesi","Tuvalet eğitiminin tamamlanması","Meslek seçiminin netleşmesi","Benlik bütünlüğünün sağlanması"], correct:0},
+  {q:"Yenidoğan yoğun bakımında ebeveynlerin bebekle bağlanmasını desteklemek için aşağıdakilerden hangisi önerilir?",
+   options:["Bebeği daha az görmelerinin sağlanması","Fiziksel temastan kaçınılması","Yapılan işlemlerin açıklanması ve ebeveyn temasının desteklenmesi","Ebeveynin bakım sürecine katılmaması","Yalnızca uzaktan gözlem yapmalarının istenmesi"], correct:2},
+  {q:"1–3 yaş çocuğunda ayrılık anksiyetesini azaltmak için aşağıdakilerden hangisi uygundur?",
+   options:["Çocuğu uykudayken habersiz bırakıp ayrılmak","Ebeveynin geliş-gidiş saatlerini rutinlerle açıklamak","Oyunu tamamen yasaklamak","Çocuğun öfkesini bastırmak","Ailenin bakıma katılımını engellemek"], correct:1},
+  {q:"3–6 yaş çocuğunda invaziv girişimlere bağlı beden bütünlüğü kaybı korkusunu azaltmak için aşağıdakilerden hangisi önemlidir?",
+   options:["İğne yerlerinin açık bırakılması","Kırmızı renkli materyallerin özellikle gösterilmesi","İşlemlerin anlayacağı şekilde açıklanması ve bölgenin kapatılması","Çocukla hiç konuşulmaması","Sadece ebeveyne bilgi verilmesi"], correct:2},
+  {q:"Okul çağındaki çocuğun hastaneye yatışına bağlı endişelerini azaltmada aşağıdakilerden hangisi en uygundur?",
+   options:["Akranları ile iletişimini kesmek","Ders ve ödevlerinden tamamen uzaklaştırmak","Okul arkadaşları ve öğretmenleriyle iletişimini desteklemek","Sadece yatak istirahati önermek","Bilgilendirmeden kaçınmak"], correct:2},
+  {q:"Adölesan hastanın hastaneye uyumunu kolaylaştıran uygulama aşağıdakilerden hangisidir?",
+   options:["Kendi alanını yönetmesine ve mahremiyetine saygı göstermek","Telefon ve bilgisayarı tamamen yasaklamak","Kararlara katılmasına izin vermemek","Arkadaş görüşmelerini engellemek","Çevreyi çocukça oyuncaklarla sınırlandırmak"], correct:0},
+  {q:"Sağlığın değerlendirilmesinde öykü alma sırasında bebeklik döneminde aşağıdakilerden hangisi önerilir?",
+   options:["Karmaşık tıbbi terimler kullanmak","Aşırı uyaran vermek","Dokunarak iletişim kurmak ve göz temasını sürdürmek","Yabancı anksiyetesini göz ardı etmek","Bebeğe uzun ve ayrıntılı sorular sormak"], correct:2},
+  {q:"Aşağıdakilerden hangisi prenatal öyküde sorgulanan bilgilerden biridir?",
+   options:["Çocuğun okul başarısı","Gebelikte annenin sağlık durumu ve prenatal bakım","Ergenlikte akran ilişkileri","Çocuğun şu anki hobileri","Son ameliyat öyküsü"], correct:1},
+  {q:"Baş çevresi ölçümü ile ilgili doğru ifade aşağıdakilerden hangisidir?",
+   options:["Meme başları hizasından ölçülür","Oksiputun en çıkıntılı noktası ile glabella üzerinden ölçülür","Sadece frontal bölgeden ölçülür","Göğüs çevresi ile aynı noktadan ölçülür","Kulak kepçeleri üstünden geçirilir"], correct:1},
+  {q:"Çocuklarda 2–20 yaş arasında büyüme değerlendirmesinde kullanılan indeks aşağıdakilerden hangisidir?",
+   options:["Apgar skoru","Beden kitle indeksi","Glasgow koma skoru","Braden skoru","Silverman-Anderson skoru"], correct:1},
+  {q:"Aşağıdakilerden hangisi çocuklarda anormal solunum seslerinden biridir?",
+   options:["Veziküler solunum","Bronkoveziküler solunum","Wheezing","Normal bronşiyal solunum","Sessiz inspiryum"], correct:2},
+  {q:"Çocuklarda kan basıncı ölçümü ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["Bebeklerde mutlaka ayakta ölçülmelidir","Kol kalp hizasında olmalı ve mümkünse sağ koldan ölçülmelidir","Manşon dar seçilmelidir","Üst kolun yarısını kapatması yeterlidir","Yılda bir ölçüm önerisi yoktur"], correct:1},
+  {q:"Anne sütü ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["İlk 6 ayda su gereksinimini karşılamaz","Sindirimi zor ve biyoyararlılığı düşüktür","Yenidoğanın sıvı, enerji ve besin ögesi gereksinimini karşılayan doğal besindir","Bağışıklık sistemine katkısı yoktur","Yalnızca ilk bir hafta önerilir"], correct:2},
+  {q:"Kolostrumun özellikleri ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["Olgun sütten daha az antikor içerir","Olgun sütten daha fazla yağ ve laktoz içerir","Bebeğin bağırsaklarının olgunlaşmasına yardımcı olur","Doğumdan bir ay sonra salgılanmaya başlar","Yenidoğan için yetersizdir"], correct:2},
+  {q:"Ek besinlere başlanırken aşağıdakilerden hangisi doğrudur?",
+   options:["Bebeğin hoşlanmadığı besinler zorla verilmelidir","Yeni besinler aynı gün içinde çok sayıda verilmelidir","Yeni besinler az miktarda ve kaşık ya da fincanla başlanmalıdır","İlk aşamada alerji potansiyeli yüksek besinler seçilmelidir","Tuzlu ve baharatlı besinler tercih edilmelidir"], correct:2},
+  {q:"1–3 yaş döneminde beslenme için aşağıdakilerden hangisi uygundur?",
+   options:["Çocuğun erişkin kadar yemesi beklenmelidir","Diyete yalnız sıvı besinler eklenmelidir","Taneli ve sert besinler aşamalı olarak eklenmelidir","Besin miktarı yaşla birlikte azaltılmalıdır","Kalsiyum ve demir gereksinimi önemsizdir"], correct:2},
+  {q:"Malnütrisyon nedenleri arasında aşağıdakilerden hangisi yer alır?",
+   options:["Enfeksiyonların yaygın olması","Yalnızca genetik özellikler","Aşırı fiziksel aktivite","Sadece ilaç kullanımı","Yalnızca mevsim değişiklikleri"], correct:0},
+  {q:"Waterlow sınıflamasında aşağıdakilerden hangisi değerlendirilir?",
+   options:["Sadece baş çevresi","Yaşa göre boy ve boya göre ağırlık oranları","Yalnız BKİ","Yalnız üst kol çevresi","Apgar ve vücut ısısı"], correct:1},
+  {q:"Çocuklarda ilaç uygulamalarında güvenli yaklaşım için aşağıdakilerden hangisi doğrudur?",
+   options:["Çocuklarda erişkin dozu aşılabilir","İlaç dozu kilo ve vücut yüzey alanına göre hesaplanabilir","Yan etki belirleme çok kolaydır","Yaşın önemi yoktur","Tüm ilaçlar standart dozla verilir"], correct:1},
+  {q:"Oral ilaç uygulamasında aşağıdakilerden hangisi yanlıştır?",
+   options:["Süt ya da mamaya ilaç eklenmemelidir","İlaç çocuğa ceza olarak verilmemelidir","Tablet formundaki ilaçlar her yaşta rahatlıkla verilebilir","Uygun ölçü aracı kullanılmalıdır","Çocuğun gelişim düzeyi dikkate alınmalıdır"], correct:2},
+  {q:"Kulak damlası uygulamasında 3 yaşın altındaki çocuklarda kulak kepçesi nasıl çekilir?",
+   options:["Yukarı ve öne","Aşağı ve geri","Sadece yukarı","Sadece dışa","Hiç çekilmez"], correct:1},
+  {q:"İntramüsküler ilaç uygulamasında 3 yaşına kadar en çok tercih edilen kas aşağıdakilerden hangisidir?",
+   options:["Deltoid","Dorsogluteal","Vastus lateralis","Ventrogluteal","Gluteus maximus"], correct:2},
+  {q:"Özefagus atrezisi ve trakeoözefageal fistülde preoperatif dönemde öncelikli hemşirelik yaklaşımı aşağıdakilerden hangisidir?",
+   options:["Ağızdan bol besin vermek","Aspirasyonu önlemek için ağızdan hiçbir şey vermemek ve başı yukarıda pozisyon vermek","Bebeği düz yatırmak","Regürjitasyonu artırmak için beslemeyi sürdürmek","Sadece aile eğitimi vermek"], correct:1},
+  {q:"Gastroşizis ile omfalosel karşılaştırıldığında gastroşizis için aşağıdakilerden hangisi daha tipiktir?",
+   options:["Kese ile örtülü olması","Eşlik eden anomalilerin çok yaygın olması","Cerrahinin acil olmaması","Organların kese olmadan karın dışında bulunması","Göbek kordonu içinde yer alması"], correct:3}
+];
+
+const TESTS = [TEST_1, TEST_2];
+let currentTestIndex = 0;
+let QUESTIONS = TESTS[currentTestIndex];
+
 const LETTERS = ["a","b","c","d","e"];
 
 const ICON_CHECK = '<svg class="opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 const ICON_X = '<svg class="opt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
-const state = {
+let state = {
   selected: new Array(QUESTIONS.length).fill(null),
   answered: new Array(QUESTIONS.length).fill(false),
   results: new Array(QUESTIONS.length).fill(null),
 };
+
+function switchTest(idx){
+  if (idx === currentTestIndex) return;
+  currentTestIndex = idx;
+  QUESTIONS = TESTS[idx];
+  state = {
+    selected: new Array(QUESTIONS.length).fill(null),
+    answered: new Array(QUESTIONS.length).fill(false),
+    results: new Array(QUESTIONS.length).fill(null),
+  };
+  document.querySelectorAll('.test-tab').forEach(t=>{
+    t.classList.toggle('active', +t.dataset.test === idx);
+  });
+  document.getElementById('eyebrow').textContent = `Test ${idx+1}`;
+  document.getElementById('meta-count').textContent = QUESTIONS.length;
+  document.getElementById('final-card').classList.remove('show');
+  document.getElementById('ring-text').textContent = '0%';
+  document.getElementById('score-circle').style.strokeDashoffset = 439.82;
+  renderAll();
+  updateStats();
+  document.getElementById('questions').scrollIntoView({behavior:'smooth', block:'start'});
+}
 
 function renderAll(){
   const root = document.getElementById('questions');
@@ -540,8 +667,11 @@ function renderAll(){
     `;
     root.appendChild(card);
   });
+}
 
-  // event delegation
+// event delegation (attached once)
+(function attachDelegation(){
+  const root = document.getElementById('questions');
   root.addEventListener('click', (e) => {
     const opt = e.target.closest('.option');
     if (opt && !opt.classList.contains('disabled')) {
@@ -557,7 +687,6 @@ function renderAll(){
       checkAnswer(qi);
     }
   });
-
   root.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       const opt = e.target.closest('.option');
@@ -567,7 +696,7 @@ function renderAll(){
       }
     }
   });
-}
+})();
 
 function selectOption(qi, oi){
   state.selected[qi] = oi;
@@ -695,6 +824,11 @@ function restart(){
 function escapeHtml(s){
   return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
+
+document.getElementById('test-tabs').addEventListener('click', (e)=>{
+  const tab = e.target.closest('.test-tab');
+  if (tab) switchTest(+tab.dataset.test);
+});
 
 renderAll();
 updateStats();
