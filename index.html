@@ -455,6 +455,7 @@
       <button class="test-tab" role="tab" data-test="3">Test 3<span class="test-tab-badge">30</span></button>
       <button class="test-tab" role="tab" data-test="4">Test 4<span class="test-tab-badge">30</span></button>
       <button class="test-tab" role="tab" data-test="5">Test 5<span class="test-tab-badge">30</span></button>
+      <button class="test-tab" role="tab" data-test="6">Çocuk Sağlığı Bağışıklama<span class="test-tab-badge">30</span></button>
     </div>
   </section>
 
@@ -946,8 +947,71 @@ const TEST_5 = [
    options:["Bebeğin dik pozisyonda beslenmesini sağlamak","Beslenme güçlüğünü göz ardı etmek","Aileyi bebeğe dokunmaktan kaçınması için uyarmak","Tartı kontrolünü gereksiz görmek","Her durumda ağızdan yoğun miktarda besin vermek"], correct:0}
 ];
 
-const TESTS = [TEST_ORIGINAL, TEST_1, TEST_2, TEST_3, TEST_4, TEST_5];
-const TEST_LABELS = ["Orijinal Test","Test 1","Test 2","Test 3","Test 4","Test 5"];
+const TEST_BAGISIKLAMA = [
+  {q:"Enfeksiyon hastalığı ile enfeksiyon arasındaki fark ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["Enfeksiyon, enfeksiyon belirtilerinin ortaya çıkmasıdır","Patojen mikroorganizmanın duyarlı bir konakçıda çoğalması enfeksiyon, belirtilerin ortaya çıkması enfeksiyon hastalığıdır","Enfeksiyon hastalığı bulaşıcı değildir, enfeksiyon bulaşıcıdır","Enfeksiyon yalnızca yenidoğanlarda görülür","İkisi arasında anlam farkı yoktur"], correct:1},
+  {q:"Enfeksiyon zincirinin halkaları aşağıdakilerden hangisinde doğru sırayla verilmiştir?",
+   options:["Duyarlı konakçı – Giriş yeri – Bulaşma – Çıkış yeri – Rezervuar – Patojen ajan","Patojen ajan – Konakçı/Rezervuar – Çıkış yeri – Bulaşma – Giriş yeri – Duyarlı konakçı","Patojen ajan – Giriş yeri – Çıkış yeri – Rezervuar – Bulaşma – Duyarlı konakçı","Rezervuar – Duyarlı konakçı – Patojen ajan – Bulaşma – Giriş yeri – Çıkış yeri","Çıkış yeri – Giriş yeri – Rezervuar – Bulaşma – Patojen ajan – Konakçı"], correct:1},
+  {q:"Bir enfeksiyon etkeninin hastalık oluşturabilme potansiyeli aşağıdakilerden hangisine bağlıdır?",
+   options:["Yalnızca mikroorganizma sayısına","Yalnızca kişinin yaşına","Mikroorganizmanın sayısı, virulansı ve kişinin bağışıklık sistemi durumuna","Sadece mevsim değişikliklerine","Yalnızca kişinin cinsiyetine"], correct:2},
+  {q:"Enfeksiyon etkenlerinin üzerinde yaşayabildiği veya yeniden üretilebildiği yer aşağıdakilerden hangisi olarak adlandırılır?",
+   options:["Patojen ajan","Rezervuar","Duyarlı konakçı","Giriş yeri","Bulaşma"], correct:1},
+  {q:"Aşağıdakilerden hangisi \"aşı\" kavramının en doğru tanımıdır?",
+   options:["Hastalık oluştuktan sonra verilen antibiyotik türüdür","Mikroorganizmaların hastalık yapma özelliklerinden arındırılarak ya da toksinlerinin etkileri ortadan kaldırılarak geliştirilen biyolojik ürünlerdir","Canlı mikroorganizmaların aktif halde uygulanmasıdır","Sadece toksinlerden oluşan kimyasal bir bileşiktir","Yalnızca yetişkinlerde kullanılan biyolojik üründür"], correct:1},
+  {q:"Aşağıdaki aşılardan hangisi canlı (attenue) aşı DEĞİLDİR?",
+   options:["BCG","KKK (Kızamık-Kızamıkçık-Kabakulak)","Oral polio","Hepatit B","Su çiçeği"], correct:3},
+  {q:"Aşağıdaki aşılardan hangisi toksoid aşı grubunda yer alır?",
+   options:["Hepatit B","BCG","KKK","Difteri ve Tetanoz","Rotavirüs"], correct:3},
+  {q:"Hepatit B aşısı aşağıdaki aşı gruplarından hangisinde yer alır?",
+   options:["Canlı aşı","Toksoid aşı","Rekombinant aşı","Polisakkarit aşı","Oral aşı"], correct:2},
+  {q:"Aşağıdakilerden hangisi polisakkarit aşı grubunda YER ALMAZ?",
+   options:["Pnömokok aşısı","Hemofilus influenza tip b (Hib) aşısı","Meningokok aşısı","Kızamık aşısı","Hib"], correct:3},
+  {q:"Aşı içeriğinde bulunan tiyomersalin temel işlevi aşağıdakilerden hangisidir?",
+   options:["Aşının etkinliğini azaltmak","Aşıda mikrop üremesini engellemek","Otizm gelişimini sağlamak","Aşı sonrası bağışıklığı bastırmak","Ağrı hissini azaltmak"], correct:1},
+  {q:"Aşı uygulamaları ile ilgili aşağıdakilerden hangisi YANLIŞTIR?",
+   options:["Her aşı öncesi ve sonrası eller yıkanmalıdır","Aşının son kullanma tarihi ve homojenliği kontrol edilmelidir","Farklı aşılar aynı enjektör içinde karıştırılarak uygulanabilir","Kullanılacak iğne ve enjektör tek kullanımlık olmalıdır","Aşılama öncesi kontrendikasyonlar sorgulanmalıdır"], correct:2},
+  {q:"İki canlı aşı aynı anda uygulanamıyorsa aralarında en az ne kadar süre bulunmalıdır?",
+   options:["1 hafta","2 hafta","3 hafta","1 ay","3 ay"], correct:3},
+  {q:"Aşı takviminde gecikme olduğunda izlenecek doğru hemşirelik yaklaşımı aşağıdakilerden hangisidir?",
+   options:["Aşılama en başından yeniden başlatılmalıdır","Hiç aşı yapılmamış gibi sıfırdan başlanmalıdır","Aşılama yeniden başlatılmaz, kaldığı yerden devam edilir","Tüm aşılar tek seansta yapılmalıdır","Çocuk yaşına bakılmaksızın aşı yapılmaz"], correct:2},
+  {q:"Aşıların saklanması ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["Aşılar buzluğa konularak dondurulmalıdır","Aşılar buzdolabı kapağında saklanmalıdır","Buzdolabı ısısı +2 ile +8 °C arasında, özellikle +4 °C'de korunmalıdır","Buzdolabı ısısı haftada bir kez kontrol edilir","Aşılar oda sıcaklığında da güvenle saklanabilir"], correct:2},
+  {q:"Buzdolabında aşıların yerleşimi ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["OPA aşısı alt rafta saklanır","DaBT-İPA-Hib aşısı orta rafta saklanır","Hepatit B aşısı üst rafta saklanır","Aşılar buzdolabı kapağında saklanır","KKK aşısı sebzelikte saklanır"], correct:1},
+  {q:"Aşağıdaki aşı ve saklama rafı eşleştirmelerinden hangisi doğrudur?",
+   options:["BCG – Alt raf","DaBT-İPA-Hib – Sebzelik","Hepatit B – Alt raf","OPA – Kapak","KKK – Alt raf"], correct:2},
+  {q:"Aşağıdakilerden hangisi aşı kontrendikasyonları arasında YER ALMAZ?",
+   options:["Aşı ve içeriğine karşı anaflaksi benzeri tablo","İmmün yetmezlikte canlı aşı uygulaması","Hamilelerde canlı aşılar","Hafif üst solunum yolu enfeksiyonu","İlerleyici nörolojik bozukluklar"], correct:3},
+  {q:"Boğmaca aşısı kaç aylıktan sonra uygulanmaz?",
+   options:["24 ay","36 ay","48 ay","60 ay","72 ay"], correct:4},
+  {q:"BCG aşısı ile ilgili aşağıdakilerden hangisi YANLIŞTIR?",
+   options:["Canlı aşıdır","Sol üst koldan intradermal uygulanır","0.05–0.1 ml dozunda uygulanır","İntramüsküler yolla uygulanır","2–6 hafta sonra aşı yerinde yaklaşık 10 mm çapında kırmızı papül oluşur"], correct:3},
+  {q:"KKK (Kızamık-Kızamıkçık-Kabakulak) aşısı ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["İnaktif aşıdır ve intramüsküler uygulanır","Canlı aşıdır ve subkutan uygulanır","Oral yolla uygulanır","Yumurtaya karşı anafilaktik reaksiyonu olanlarda güvenle uygulanabilir","Aşı sonrası hiçbir yan etki görülmez"], correct:1},
+  {q:"Oral polio aşısı uygulandıktan sonra çocuk kaç dakika içinde kusarsa doz tekrarlanmalıdır?",
+   options:["5 dakika","10 dakika","20 dakika","30 dakika","1 saat"], correct:1},
+  {q:"Oral polio aşısı (OPA) uygulaması sonrasında aşağıdakilerden hangisi doğrudur?",
+   options:["Aşı sonrası 24 saat anne sütü kesinlikle verilmez","Aşı sonrası anne sütü alabilir, ancak 2 saat süresince klorlu su içmemelidir","Aşı sonrası hemen klorlu su ile ağız yıkanmalıdır","Aşı sonrası 24 saat hiçbir besin verilmez","Aşı yalnızca aç karna uygulanır ve sonrasında 12 saat aç bırakılır"], correct:1},
+  {q:"Hemofilus influenza tip B (Hib) aşısı özellikle 5 yaş altı çocuklarda hangi hastalığa karşı koruyuculuk sağlar?",
+   options:["Şiddetli gastroenterit","Bakteriyel menenjit","Tüberküloz","Hepatit","Su çiçeği"], correct:1},
+  {q:"Konjuge pnömokok aşısı (KPA) ulusal takvimde hangi aylarda uygulanır?",
+   options:["0., 1. ve 6. aylar","1., 3. ve 9. aylar","2., 4. ve 12. aylar","6., 12. ve 18. aylar","9., 12. ve 24. aylar"], correct:2},
+  {q:"DaBT-İPA-Hib aşısı ile ilgili aşağıdakilerden hangisi YANLIŞTIR?",
+   options:["Difteri, asellüler Boğmaca, Tetanoz, İnaktif Polio ve Hemofilus influenza tip b'yi içerir","Orta rafta saklanır ve donmaması gerekir","1. ile 2. doz ve 2. ile 3. doz arasında en az 4 hafta süre bırakılmalıdır","3. doz ile rapel doz arasında en az 12 ay süre olmalıdır","Aşı sıfır derecenin altında dondurularak uzun süre saklanabilir"], correct:4},
+  {q:"Oral polio aşısı (OPA) ile inaktif polio aşısının (IPA) karşılaştırılmasında aşağıdakilerden hangisi doğrudur?",
+   options:["IPA aşıyla ilişkili poliomiyelite yol açabilir, OPA açmaz","OPA canlı aşıdır; gastrointestinal bağışıklık yanıtı IPA'ya göre daha yüksektir","IPA oral yolla uygulanır","IPA canlı aşıdır ve immün yetmezlikte tercih edilmez","OPA inaktif aşıdır ve 5'li karma aşı içinde bulunur"], correct:1},
+  {q:"Su çiçeği aşısı ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["İnaktif aşıdır ve intramüsküler uygulanır","Canlı virüs aşısıdır ve subkutan uygulanır","HIV enfekte çocuklara kesinlikle uygulanamaz","Aşı sonrası döküntü asla görülmez","Oral yolla uygulanır"], correct:1},
+  {q:"Rotavirüs aşısı ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["İlk dozu 6-15 hafta arasında uygulanmalıdır","Her yıl grip sezonunda tekrarlanmalıdır","İntramüsküler uygulanır","2 yaş altında etkisizdir","Adölesan dönemde tek doz uygulanır"], correct:0},
+  {q:"Meningokok aşısı ile ilgili aşağıdakilerden hangisi doğrudur?",
+   options:["Doğumdan itibaren rutin olarak uygulanabilir","2 yaş altında etkisizdir; ilk doz 11–12 yaş arasında önerilir","Yalnızca yetişkin bireylerde uygulanır","Tek dozluktur; rapel yapılmaz","Canlı aşıdır; immün yetmezlikte güvenle uygulanır"], correct:1},
+  {q:"Bağışıklamada hemşirenin sorumlulukları arasında aşağıdakilerden hangisi YER ALMAZ?",
+   options:["Aşılamanın yararını bilmek ve topluma öğretmek","Aşı üretiminden bireye uygulanmasına kadar soğuk zinciri korumak","Aşı kontrendikasyonlarının olduğu durumları bilmek","Hekim istemi olmadan aşı reçetesini bağımsız olarak düzenlemek","Aşı sonrası gelişebilecek reaksiyonları ve alınacak önlemleri bilmek"], correct:3}
+];
+
+const TESTS = [TEST_ORIGINAL, TEST_1, TEST_2, TEST_3, TEST_4, TEST_5, TEST_BAGISIKLAMA];
+const TEST_LABELS = ["Orijinal Test","Test 1","Test 2","Test 3","Test 4","Test 5","Çocuk Sağlığı Bağışıklama"];
 let currentTestIndex = 0;
 let QUESTIONS = TESTS[currentTestIndex];
 
